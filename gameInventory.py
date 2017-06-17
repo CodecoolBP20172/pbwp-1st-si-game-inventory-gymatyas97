@@ -24,20 +24,19 @@ def add_to_inventory(inventory, added_items):
                 inventory[key] = count
     return inventory
 
-
-def length(x):
+# Takes the inventory and finds the longest element.
+def k_length(inventory):
     n = 0
     maxlength = 0
-    for element in x:
+    for element in inventory:
         length = len(element)
         if length > maxlength:
             maxlength=length
     return maxlength
 
-def keywithmaxval(d):
-    v=list(d.values())
-    k=list(d.keys())
-    return len(str(v[v.index(max(v))]))
+# Takes the inventory and finds the longest value.
+def v_length(inv):
+    return len(str(max(list(inv.values()))))
 
 
 # Takes your inventory and displays it in a well-organized table with 
@@ -47,24 +46,29 @@ def keywithmaxval(d):
 # - "count,desc" means the table is ordered by count (of items in the inventory) 
 #   in descending order
 # - "count,asc" means the table is ordered by count in ascending order
-def print_table(inventory, order=None):
+def print_table(inv, order=""):
     print("Inventory:\n")
-    x = longest + biggest + DECORATION_STRING_LENGTH
-    print(" "*biggest+'count'+" "*longest+'item name')
+    k_longest=k_length(inv)
+    v_longest=v_length(inv)
+    x = k_longest + v_longest + DECORATION_STRING_LENGTH
+    print(" "*v_longest+'count'+" "*k_longest+'item name')
     print('-' * x)
     if order=="count,desc":
-        asc=False
+        desc=True
     elif order=="count,asc":
-        asc=True
+        desc=False
     elif order=="":
         for key in inv:
-            print(str(inventory[key]).rjust(biggest+5," "),end="")
-            print(str(key).rjust(longest+9," "),end="\n")
+            print(str(inv[key]).rjust(v_longest+5," "),end="")
+            print(str(key).rjust(k_longest+9," "),end="\n")
         print("-" * x+"\nTotal number of items: %d" % sum(inv.values()))
         return
-    for i in sorted(inventory, key=lambda n: (-inventory[n],n),reverse=asc):
-        print(str(inv[i]).rjust(biggest+5," "),end="")
-        print(str(i).rjust(longest+9," "),end="\n")
+    else:
+        print("Invalid order!\n"+"-"*x)
+        return
+    for i in sorted(inventory, key=lambda n: inv[n],reverse=desc):
+        print(str(inv[i]).rjust(v_longest+5," "),end="")
+        print(str(i).rjust(k_longest+9," "),end="\n")
     print("-" * x+"\nTotal number of items: %d" % sum(inv.values()))
 
 
