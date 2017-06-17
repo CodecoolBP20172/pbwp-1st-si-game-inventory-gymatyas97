@@ -35,8 +35,8 @@ def k_length(inventory):
     return maxlength
 
 # Takes the inventory and finds the longest value.
-def v_length(inv):
-    return len(str(max(list(inv.values()))))
+def v_length(inventory):
+    return len(str(max(list(inventory.values()))))
 
 
 # Takes your inventory and displays it in a well-organized table with 
@@ -46,10 +46,10 @@ def v_length(inv):
 # - "count,desc" means the table is ordered by count (of items in the inventory) 
 #   in descending order
 # - "count,asc" means the table is ordered by count in ascending order
-def print_table(inv, order=""):
+def print_table(inventory, order=""):
     print("Inventory:\n")
-    k_longest=k_length(inv)
-    v_longest=v_length(inv)
+    k_longest=k_length(inventory)
+    v_longest=v_length(inventory)
     x = k_longest + v_longest + DECORATION_STRING_LENGTH
     print(" "*v_longest+'count'+" "*k_longest+'item name')
     print('-' * x)
@@ -58,18 +58,18 @@ def print_table(inv, order=""):
     elif order=="count,asc":
         desc=False
     elif order=="":
-        for key in inv:
-            print(str(inv[key]).rjust(v_longest+5," "),end="")
+        for key in inventory:
+            print(str(inventory[key]).rjust(v_longest+5," "),end="")
             print(str(key).rjust(k_longest+9," "),end="\n")
-        print("-" * x+"\nTotal number of items: %d" % sum(inv.values()))
+        print("-" * x+"\nTotal number of items: %d" % sum(inventory.values()))
         return
     else:
         print("Invalid order!\n"+"-"*x)
         return
-    for i in sorted(inventory, key=lambda n: inv[n],reverse=desc):
-        print(str(inv[i]).rjust(v_longest+5," "),end="")
+    for i in sorted(inventory, key=lambda n: inventory[n],reverse=desc):
+        print(str(inventory[i]).rjust(v_longest+5," "),end="")
         print(str(i).rjust(k_longest+9," "),end="\n")
-    print("-" * x+"\nTotal number of items: %d" % sum(inv.values()))
+    print("-" * x+"\nTotal number of items: %d" % sum(inventory.values()))
 
 
 # Imports new inventory items from a file
