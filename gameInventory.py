@@ -1,9 +1,8 @@
 # This is the file where you must work. Write code in the functions, create new functions,
 # so they work according to the specification
-
+import csv
+DECORATION_STRING_LENGTH = 14
 # Displays the inventory.
-
-
 def display_inventory(inventory):
     print("Inventory:")
     for key in inventory:
@@ -26,9 +25,8 @@ def add_to_inventory(inventory, added_items):
                 inventory[key] = count
     return inventory
 
+
 # Takes the inventory and finds the longest element.
-
-
 def k_length(inventory):
     n = 0
     maxlength = 0
@@ -38,9 +36,8 @@ def k_length(inventory):
             maxlength = length
     return maxlength
 
+
 # Takes the inventory and finds the longest value.
-
-
 def v_length(inventory):
     return len(str(max(list(inventory.values()))))
 
@@ -95,8 +92,12 @@ def import_inventory(inventory, filename="import_inventory.csv"):
 # called "export_inventory.csv". The file format is the same plain text
 # with comma separated values (CSV).
 def export_inventory(inventory, filename="export_inventory.csv"):
-    with open(filename, "r") as outputstream:
-        for line in outputstream:
-            currentline = line.split(",")
-        inventory = add_to_inventory(inventory, currentline)
-    return inventory
+    outputlist = []
+    for key in inventory:
+        value = 0
+        while value < inventory[key]:
+            outputlist.append(key)
+            value += 1
+    with open(filename, "w", newline="") as outputstream:
+        writer = csv.writer(outputstream)
+        writer.writerow(outputlist)
